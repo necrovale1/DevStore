@@ -14,7 +14,11 @@
     //switch para verificar o metodo requisitado
     switch($method){
         case 'GET':
-            handleGet($pdo);
+            if(isset($_GET['idProd'])){
+                handleGetFiltroID($pdo);
+            }else{
+                handleGet($pdo);
+            }
             break;
         default:
             echo json_encode(['message'=>
@@ -33,6 +37,21 @@
         //coloca o resultado em um vetor
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //exibe os dados na tela em json
-        echo json_encode($result, 
-            JSON_UNESCAPED_UNICODE);
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+    // traz os produtos com filtro pelo ID
+    function handleGetFiltroID($pdo){
+        // variavel para o filtro do ID
+        $filtro = $_GET['idProd'];
+        // sql para consultar com o filtro do ID
+        $sql = "SELECT * FROM tblProdutos WHERE idProd='$filtro'";
+        // prepara a execução
+        $stmt = $pdo->prepare($sql);
+        // executa o sql
+        $stmt->execute();
+        //recebe os dados vindos da consulta
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //exibe os resultados em json
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+?>
