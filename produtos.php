@@ -16,6 +16,8 @@
         case 'GET':
             if(isset($_GET['idProd'])){
                 handleGetFiltroID($pdo);
+            }else if(isset($_GET['categoriaProd'])){
+                handleGetFiltroCategoria($pdo);
             }else{
                 handleGet($pdo);
             }
@@ -37,21 +39,40 @@
         //coloca o resultado em um vetor
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //exibe os dados na tela em json
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        echo json_encode($result, 
+            JSON_UNESCAPED_UNICODE);
     }
-    // traz os produtos com filtro pelo ID
+    //traz os produtos com filtro pelo ID
     function handleGetFiltroID($pdo){
-        // variavel para o filtro do ID
+        //variavel para o filtro pelo id
         $filtro = $_GET['idProd'];
-        // sql para consultar com o filtro do ID
-        $sql = "SELECT * FROM tblProdutos WHERE idProd='$filtro'";
-        // prepara a execução
+        //sql para consultar com filtro do ID
+        $sql = "SELECT * FROM tblProdutos 
+        WHERE idProd='$filtro'";
+        //prepara a execucao com o statement
         $stmt = $pdo->prepare($sql);
-        // executa o sql
+        //executa o sql
+        $stmt->execute();
+        //recebe os dados vindos da consulta sql
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //exibe os resultado em json
+        echo json_encode($result, 
+        JSON_UNESCAPED_UNICODE);
+    }
+    //filtra os produtos pela categoria
+    function handleGetFiltroCategoria($pdo){
+        //variavel para o filtro por categoria
+        $filtro = $_GET['categoriaProd'];
+        //sql para consultar na base
+        $sql = "SELECT * FROM tblProdutos WHERE 
+        categoriaProd = '$filtro'";
+        //prepara a execucao
+        $stmt = $pdo->prepare($sql);
+        //executa a consulta no banco
         $stmt->execute();
         //recebe os dados vindos da consulta
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        //exibe os resultados em json
+        //exibe os dados num json
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
-?>
+

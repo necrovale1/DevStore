@@ -1,4 +1,4 @@
-//cria os vetores para receber dados dos produtos //
+//cria os vetores para receber dados dos produtos
 var idsProds=[];
 var descProds=[];
 var precoProds=[];
@@ -57,26 +57,29 @@ function pesquisaProdutos(){
             var preco = precoProds[j];
             var foto = fotoProds[j];
             var categoria = categoriaProds[j];
-            //cria div para o card do produto
+            //cria uma div para o card do produto
             var cardProd = document.createElement('div');
             //seta a classe da div
             cardProd.setAttribute('class', 'product-item');
-            //escreve card em html
-            cardProd.innerHTML = '<a href="./product.html?idProd='+id+'">'+
-            '<div class="product-photo">'+'<img src="./assets/images/products/'+foto+'"/>'+
-            '</div>'+
-            '<div class="product-name">'+desc+'</div>'+
-            '<div class="product-price">'+preco+'</div>'+
-            '<div class="product-info">Pagamento via Pix</div>'+
-            '</a>'+
-            '<div class="product-fav">'+
-            '<img src="./assets/images/ui/heart-3-line.png" />'+
-            '</div></div>';
-
-        // adiciona o card no grid de produtos
+            //escreve o card em html
+            cardProd.innerHTML =
+                '<a href="./product.html?idProd='+id+'">'+
+                '<div class="product-photo">'+
+                '<img src="./assets/images/products/'+foto+'"/>'+
+                '</div>'+
+                '<div class="product-name">'+desc+'</div>'+
+                '<div class="product-price">'+preco+'</div>'+
+                '<div class="product-info">Pagamento via PIX</div>'+
+                '</a>'+
+                '<div class="product-fav">'+
+                '<img src="./assets/images/ui/heart-3-line.png" />'+
+                '</div></div>';
+            //adiciona o card no grid de produtos
             divProds.appendChild(cardProd);
-        }   
 
+
+        }
+        //monta os cards dos produtos
         for(var j=0;j<idsProds.length;j=j+4){
             //variaveis para cada campo
             var id = idsProds[j];
@@ -85,27 +88,30 @@ function pesquisaProdutos(){
             var preco = precoProds[j];
             var foto = fotoProds[j];
             var categoria = categoriaProds[j];
-            //cria div para o card do produto
+            //cria uma div para o card do produto
             var cardProd = document.createElement('div');
             //seta a classe da div
             cardProd.setAttribute('class', 'product-item');
-            //escreve card em html
-            cardProd.innerHTML = '<a href="./product.html?idProd='+id+'">'+
-            '<div class="product-photo">'+'<img src="./assets/images/products/'+foto+'"/>'+
-            '</div>'+
-            '<div class="product-name">'+desc+'</div>'+
-            '<div class="product-price">'+preco+'</div>'+
-            '<div class="product-info">Pagamento via Pix</div>'+
-            '</a>'+
-            '<div class="product-fav">'+
-            '<img src="./assets/images/ui/heart-3-line.png" />'+
-            '</div></div>';
-
-        // adiciona o card no grid de produtos
+            //escreve o card em html
+            cardProd.innerHTML =
+                '<a href="./product.html?idProd='+id+'">'+
+                '<div class="product-photo">'+
+                '<img src="./assets/images/products/'+foto+'"/>'+
+                '</div>'+
+                '<div class="product-name">'+desc+'</div>'+
+                '<div class="product-price">'+preco+'</div>'+
+                '<div class="product-info">Pagamento via PIX</div>'+
+                '</a>'+
+                '<div class="product-fav">'+
+                '<img src="./assets/images/ui/heart-3-line.png" />'+
+                '</div></div>';
+            //adiciona o card no grid de produtos
             divSeen.appendChild(cardProd);
-        }   
+
+
+        }
     })
     .catch(error=>{
-        alert("Erro:"+error);
+        alert("Erro: "+error);
     });
 }
