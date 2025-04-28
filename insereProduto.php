@@ -45,5 +45,6 @@
     $result = json_decode($response, true);
     //chama a função de inserir a foto
     //insereFoto();             05/05
-}
+    }
+
 ?>
