@@ -22,6 +22,9 @@
                 handleGet($pdo);
             }
             break;
+        case 'POST':
+            handlePost($pdo, $input);
+            break;
         default:
             echo json_encode(['message'=>
             'Método inválido'], 
@@ -75,4 +78,20 @@
         //exibe os dados num json
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
-
+//função do post - insere dados na base
+function handlePost($pdo, $input){
+    //sql para inserir o registro
+    $sql = "INSERT INTO tblProdutos(descProd, categoriaProd, precoProd, tamanhoProd, fotoProd)
+    VALUES (:descProd, :categoriaProd, :precoProd, :tamanhoProd, :fotoProd)";
+    //prepara a execucao
+    $stmt=$pdo->prepare($sql);
+    //executa e substitui os parametros
+    $stmt->execute(['descProd'=>$input['descProd'],
+    'categoriaProd'=>$input['categoriaProd'],
+    'precoProd'=>$input['precoProd'],
+    'tamanhoProd'=>$input['tamanhoProd'],
+    'fotoProd'=>$input['fotoProd']
+    ]); 
+    //exibe resposta do servidor
+    echo json_encode(['message'=>'Produto Cadastrado'],JSON_UNESCAPED_UNICODE);
+}
