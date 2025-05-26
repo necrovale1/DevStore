@@ -44,7 +44,54 @@
     }
     $result = json_decode($response, true);
     //chama a função de inserir a foto
-    //insereFoto();             05/05
+    //insereFoto();             26/05
+    insereFoto();
     }
+    //função para inserir foto
+    function insereFoto(){
+        //caminho para onde a foto vai ser salva
+        $target_dir = "./assets/images/products/";
+        //nome do arquivo com o caminho
+        $target_file = $target_dir.basename($_FILES["foto"]["name"]);
+        //PEGA A EXTENSÂO DA IMAGEM
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
+        //variavel para controlar o upload
+        $uploadOK = 1;
+
+        //verifica se o arquivo já existe
+        if(file_exists($target_file)){
+            echo 'arquivo já existe';
+            $uploadOK = 0;
+        }
+        //checar o tamanho do arquivo
+        if($_FILES["foto"]["size"]>500000){
+            echo 'arquivo muito grande';
+            $uploadOK = 0;
+        }
+
+     /*verifica o tipo de arquivo
+
+        if ($imageFileType != "jpg" ||  $imageFileType != "png" || $imageFileType != "jpeg" || $imageFileType != "gif"){
+            echo 'Tipo de imagem não permitido';
+            $uploadOK = 0;
+        }
+    */
+
+    //verifica o tipo de arquivo
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        echo 'Tipo de imagem não permitido';
+        $uploadOK = 0;
+        }
+        
+        if($uploadOK == 1){
+            if(move_uploaded_file($_FILES["foto"]["tmp_name"],$target_file)){
+                header("Location: http://localhost/devstore/index.html");
+                
+            }else{
+                echo 'Não foi possivel gravar a foto';
+            }
+        }
+
+    }
 ?>
