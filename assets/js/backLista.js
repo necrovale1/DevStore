@@ -29,19 +29,25 @@ function pesquisaProdutosCategoria(){
     //limpa os vetores
     limpa_vetores();
     //continua em 25/04
-    fetch('http://localhost/devstore/produtos.php'+'?categoriaProd='+cat)
+    //faz a requisicao ao backend
+    fetch('http://localhost/devstore/produtos.php'+
+        '?categoriaProd='+cat)
+    //pega a resposta em json
     .then(response=>response.json())
+    //manipula os dados vindos na resposta
     .then(data=>{
         //pega os elementos do html
-        const divProds = document.getElementById('produtosGrid');
+        const divProds = 
+            document.getElementById('produtosGrid');
         divProds.replaceChildren();
         const qtde = document.getElementById('qtde');
-        const breadcrumb = document.getElementById('breadcrumb');
+        const breadcrumb = 
+            document.getElementById('breadcrumb');
         breadcrumb.replaceChildren();
-        breadcrumb.textContent = 'Home >' +cat;
-        // estrutura de repeticao para alimentar os vetores
+        breadcrumb.textContent = 'Home > '+cat;
+        //estrutura de repeticao para alimentar os vetores
         for(var i=0;i<data.length;i++){
-            // push adiciona item no final do vetor
+            //push adiciona item no final do vetor
             idsProds.push(data[i].idProd);
             descProds.push(data[i].descProd);
             precoProds.push(data[i].precoProd);
@@ -51,7 +57,8 @@ function pesquisaProdutosCategoria(){
         }
         //altera o elemento qtde
         qtde.textContent = idsProds.length + ' produtos';
-        for(var j=0;j< idsProds.length;j++){
+        //estrutura de repeticao para montar os cards
+        for(var j=0;j<idsProds.length;j++){
             var id = idsProds[j];
             var desc = descProds[j];
             var tamanho = tamanhoProds[j];
@@ -59,18 +66,29 @@ function pesquisaProdutosCategoria(){
             var foto = fotoProds[j];
             var categoria = categoriaProds[j];
             //cria o card como div
-            var cardProd = document.createElement('div');
-            cardProd.setAttribute('class','product-item');
-            cardProd.innerHTML = '<a href="./product.html?idProd='+id+'">'+
-            '<div class="product-photo">'+'<img src="./assets/images/products/'+foto+'"/></div>'+
+            var cardProd = 
+                document.createElement('div');
+            cardProd.setAttribute('class', 'product-item');
+            //configura o html do card
+            cardProd.innerHTML =
+            '<a href="./product.html?idProd='+id+'">'+
+            '<div class="product-photo">'+
+            '<img src="./assets/images/products/'+foto+
+            '"/></div>'+
             '<div class="product-name">'+desc+'</div>'+
-            '<div class="product-price">'+preco+'</div>'+
-            '<div class="product-info">Pagamento via Pix</div>'+'</a>'+
-            '<div class="product-fav">'+'<img src="./assets/images/ui/heart-3-line.png"/>'+'</div>';
-            // adicionar o card no grid de produtos
+            '<div class="product-price">R$ '+preco+'</div>'+
+            '<div class="product-info">Pagamento via Pix</div>'+
+            '</a>'+
+            '<div class="product-fav">'+
+            '<img src="./assets/images/ui/heart-3-line.png"/>'+
+            '</div></div>';
+            //adiciona o card no grid de produtos
             divProds.appendChild(cardProd);
+
         }
+        
     })
-    .catch(error=>{alert("Erro: "+error);
+    .catch(error=>{
+        alert("Erro: "+error);
     });
 }
